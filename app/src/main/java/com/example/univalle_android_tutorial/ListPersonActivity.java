@@ -2,6 +2,7 @@ package com.example.univalle_android_tutorial;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -9,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.univalle_android_tutorial.Adapters.MyRecyclerViewAdapter;
 import com.example.univalle_android_tutorial.Entity.Person;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListPersonActivity extends AppCompatActivity {
-    public List<Person> personList = new ArrayList<>();
+    public ArrayList<Person> personList = new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    RecyclerView recyclerView;
+    MyRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +41,18 @@ public class ListPersonActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        init();
         inicializarFirebase();
         getListPerson();
     }
+    public void init(){
+        LayoutInflater inflateLayout = LayoutInflater.from(getApplicationContext());
+        adapter = new MyRecyclerViewAdapter(personList, inflateLayout);
+        recyclerView = findViewById(R.id.rcvPersons);
+        recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(adapter);
 
+    }
     public void inicializarFirebase(){
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -55,6 +69,7 @@ public class ListPersonActivity extends AppCompatActivity {
                     personList.add(person);
                     Log.d("UNIVALLE",person.getNombre());
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
