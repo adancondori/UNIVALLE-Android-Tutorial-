@@ -47,7 +47,7 @@ public class ListPersonActivity extends AppCompatActivity {
     }
     public void init(){
         LayoutInflater inflateLayout = LayoutInflater.from(getApplicationContext());
-        adapter = new MyRecyclerViewAdapter(personList, inflateLayout);
+        adapter = new MyRecyclerViewAdapter(personList, inflateLayout, this);
         recyclerView = findViewById(R.id.rcvPersons);
         recyclerView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);
