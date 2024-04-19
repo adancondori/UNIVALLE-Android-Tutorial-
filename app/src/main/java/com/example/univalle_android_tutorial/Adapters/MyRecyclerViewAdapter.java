@@ -2,12 +2,14 @@ package com.example.univalle_android_tutorial.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -43,9 +45,24 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.txtTitulo2.setText(appData.get(position).getNombre());
         holder.txtDescripccion2.setText(appData.get(position).getCorreo());
+        // ocupado, libre, reservado
+        if (appData.get(position).getNombre().equals("ocupado")){
+            holder.cardID.setCardBackgroundColor(Color.RED);
+        } else if(appData.get(position).getNombre().equals("libre")) {
+            holder.cardID.setCardBackgroundColor(Color.WHITE);
+        } else if(appData.get(position).getNombre().equals("reservado")) {
+            holder.cardID.setCardBackgroundColor(Color.GREEN);
+        }
         holder.cardID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (appData.get(position).getNombre().equals("ocupado")){
+                    Toast.makeText(context,"Ocupado",Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (appData.get(position).getNombre().equals("reservado")){
+                    Toast.makeText(context,"Reservado",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent (context, MainActivity.class);
                 intent.putExtra("PERSON_UID", appData.get(position).getUid());
                 context.startActivity(intent);
