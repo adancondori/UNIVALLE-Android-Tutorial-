@@ -1,5 +1,6 @@
 package com.example.univalle_android_tutorial;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.example.univalle_android_tutorial.activities.RegisterActivity;
 import com.example.univalle_android_tutorial.adapters.UserAdapter;
 import com.example.univalle_android_tutorial.models.User;
 import com.example.univalle_android_tutorial.service.UserResponse;
@@ -94,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void NextScreen(View view){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
     /*
     public void initUsers(){
         userList.add(new User(1,"matatan@gmail.com","Andres","Pereira","https://reqres.in/img/faces/1-image.jpg"));
