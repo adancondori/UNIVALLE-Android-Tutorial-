@@ -13,9 +13,9 @@ public class PokeService {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    private static PokeAPI pokeAPI = retrofit.create(PokeAPI.class);
+    private static PokeAPI conexionAPI = retrofit.create(PokeAPI.class);
 
-    public static PokeAPI getMovieAPI() {
-        return pokeAPI;
+    public static PokeAPI getConexionAPI() {
+        return conexionAPI;
     }
 }
