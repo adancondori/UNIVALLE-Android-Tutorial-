@@ -1,26 +1,22 @@
 package com.example.univalle_android_tutorial;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.univalle_android_tutorial.helper.SharedPreferencesHelper;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
-    TextView name;
-    TextView email;
+    TextView user;
+    TextView pass;
     public static final String mypreference = "mypref";
-    public static final String Name = "nameKey";
-    public static final String Email = "emailKey";
+    public static final String PASSWORD = "password";
+    public static final String USER = "user";
     SharedPreferencesHelper preferencesHelper;
 
     @Override
@@ -35,35 +31,58 @@ public class MainActivity extends AppCompatActivity {
         });
          */
         init();
+        String user2 = preferencesHelper.getString(USER, "");
+        String pass2 = preferencesHelper.getString(PASSWORD, "");
+        if (user2.equals("admin")){
+            Intent myIntent = new Intent(this, DasboadActivity.class);
+            startActivity(myIntent);
+            finish();
+        }else {
+
+        }
+
+
     }
 
     public void init(){
         preferencesHelper = new SharedPreferencesHelper(this);
-        name = (TextView) findViewById(R.id.etName);
-        email = (TextView) findViewById(R.id.etEmail);
+        pass = (TextView) findViewById(R.id.etName);
+        user = (TextView) findViewById(R.id.etEmail);
         retrive();
     }
     public void SaveData(View view) {
-        String n = name.getText().toString();
-        String e = email.getText().toString();
-        preferencesHelper.saveString(Name, n);
-        preferencesHelper.saveString(Email, e);
+        String n = pass.getText().toString();
+        String e = user.getText().toString();
+        preferencesHelper.saveString(PASSWORD, n);
+        preferencesHelper.saveString(USER, e);
     }
 
     public void clear(View view) {
-        name = (TextView) findViewById(R.id.etName);
-        email = (TextView) findViewById(R.id.etEmail);
-        name.setText("");
-        email.setText("");
+        user.setText("");
+        pass.setText("");
     }
 
     public void Get(View view) {
         retrive();
     }
     public void retrive(){
-        name = (TextView) findViewById(R.id.etName);
-        email = (TextView) findViewById(R.id.etEmail);
-        name.setText(preferencesHelper.getString(Name, ""));
-        email.setText(preferencesHelper.getString(Email, ""));
+        pass.setText(preferencesHelper.getString(PASSWORD, ""));
+        user.setText(preferencesHelper.getString(USER, ""));
+    }
+
+    public void login(View view) {
+        String password = pass.getText().toString();
+        String username = user.getText().toString();
+        preferencesHelper.saveString(USER, username);
+        preferencesHelper.saveString(PASSWORD, password);
+        if (username.equals("admin")) {
+            Intent myIntent = new Intent(this, DasboadActivity.class);
+            startActivity(myIntent);
+            finish();
+        } else {
+
+        }
+
+
     }
 }
